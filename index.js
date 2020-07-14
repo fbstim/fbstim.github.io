@@ -144,7 +144,8 @@ function addTag(context, mls) {
     });
 
     if (id) {
-        Front.tag([id]);
+        context.tag([id]);
+        // tried Front.tag([id]); here as well with same result
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
         console.log("Creating new tag for MLS code " + mls);
