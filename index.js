@@ -102,7 +102,7 @@ function displayContactInfo(conversation, fbsusers) {
         });
 
         // get rid of duplicates in mls list then tag if there's only one MLS
-        addTag(conversation, mls[0]);
+        addTag(conversation, 'FGO');
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         } else {
@@ -129,12 +129,17 @@ async function getTags() {
 }
 
 function addTag(conversation, mls) {
-    console.dir(all_tags);
+    // don't bother creating / tagging these
+    var ignore_these = ["FVT", "DEMOMLS", "SPARK"];
     mls = mls.toUpperCase();
-    console.log("Adding tag for " + mls);
+    
+    if (ignore_these.includes(mls)) {
+        console.log("Ignoring " + mls);
+        return;
+    }
+    
     let id = false;
     $.each(all_tags, function (key, value) {
-        console.dir(value);
         if (value.name == mls) {
             id = value.id;
             console.log("Found tag for " + mls);
