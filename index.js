@@ -113,13 +113,13 @@ function displayContactInfo(conversation, fbsusers) {
 
 async function getTags() {
     console.log("Loading tags");
-    const list = await listTags();
+    const list = await Front.listTags();
 
     let nextPageToken = list.token;
     const tags = list.results;
 
     while (nextPageToken) {
-        const { results, token } = await listTags(nextPageToken);
+        const { results, token } = await Front.listTags(nextPageToken);
 
         nextPageToken = token;
         tags.push(...results);
