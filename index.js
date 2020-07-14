@@ -1,12 +1,11 @@
 let tags = null;
 
-Front.contextUpdates.subscribe(context => {
-    getTags().then((tags) => {
-        tags = tags;
-        console.log("Tags loaded");
-        console.dir(tags);
-    })
+getTags().then((tags) => {
+    tags = tags;
+    console.log("Tags loaded");
+})
 
+Front.contextUpdates.subscribe(context => {
     //Init the head with no contact
     displayHeader();
 
