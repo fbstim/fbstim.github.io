@@ -1,4 +1,4 @@
-let tags = null;
+var tags = null;
 
 getTags().then(tags => {
     tags = tags;
