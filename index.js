@@ -1,11 +1,12 @@
-let tags = null;
-
-getTags().then((tags) => {
-    tags = tags;
-    console.log("Tags loaded");
-})
+let tags = await getTags();
+// 
+// getTags().then((tags) => {
+//     tags = tags;
+//     console.log("Tags loaded");
+// })
 
 Front.contextUpdates.subscribe(context => {
+    await getTags();
     //Init the head with no contact
     displayHeader();
 
@@ -73,7 +74,6 @@ function displayContactInfo(conversation, fbsusers) {
 
     if (fbsusers.length > 0) {
         fbsusers.forEach((fbsuser) => {
-            console.log("Pushing mls from " + fbsuser['Mls']);
             mls.push(fbsuser['Mls']);
             var info = document.getElementById("infoSection");
 
