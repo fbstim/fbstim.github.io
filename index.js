@@ -1,41 +1,39 @@
-let tags = getTags();
-console.log("tags");
-console.dir(tags);
-// 
-// getTags().then((tags) => {
-//     tags = tags;
-//     console.log("Tags loaded");
-// })
+let tags = null;
 
-Front.contextUpdates.subscribe(context => {
-    //Init the head with no contact
-    displayHeader();
+getTags().then(tags => {
+    tags = tags;
+    console.log("Tags loaded");
+}).then(function() {
+    Front.contextUpdates.subscribe(context => {
+        //Init the head with no contact
+        displayHeader();
 
-    switch (context.type) {
-        case 'noConversation':
-            break;
-        case 'singleConversation':
-            let conversation = context.conversation;
-            $.ajax({
-                url: 'https://mailtools.flexmls.com/api/finger.json',
-                type: 'POST',
-                data: {search_term: conversation.recipient.handle},
-                dataType: 'json',
-                xhrFields: {withCredentials: true},
-            }).done(function (results) {
-                displayContactInfo(conversation, results);
-            }).fail(function (req, status) {
-                //can't catch a 302, so just catch the post redirect failure
-                Front.openUrlInPopup('https://mailtools.flexmls.com/ticket');
-            });
-            break;
-        case 'multiConversations':
-            //console.log('Multiple conversations selected', context.conversations);
-            break;
-        default:
-            console.error(`Unsupported context type: ${context.type}`);
-            break;
-    }
+        switch (context.type) {
+            case 'noConversation':
+                break;
+            case 'singleConversation':
+                let conversation = context.conversation;
+                $.ajax({
+                    url: 'https://mailtools.flexmls.com/api/finger.json',
+                    type: 'POST',
+                    data: {search_term: conversation.recipient.handle},
+                    dataType: 'json',
+                    xhrFields: {withCredentials: true},
+                }).done(function (results) {
+                    displayContactInfo(conversation, results);
+                }).fail(function (req, status) {
+                    //can't catch a 302, so just catch the post redirect failure
+                    Front.openUrlInPopup('https://mailtools.flexmls.com/ticket');
+                });
+                break;
+            case 'multiConversations':
+                //console.log('Multiple conversations selected', context.conversations);
+                break;
+            default:
+                console.error(`Unsupported context type: ${context.type}`);
+                break;
+        }
+    });
 });
 
 function displayHeader(contact = null) {
@@ -112,16 +110,16 @@ function displayContactInfo(conversation, fbsusers) {
     }
 }
 
-function getTags() {
+async function getTags() {
     console.log("Loading tags");
-    const list = Front.listTags();
+    const list = await Front.listTags();
 
     let token = list.nextPageToken;
     const this_tags = list.results;
 
     while (token) {
         console.log("Making pagination request for " + token);
-        const { results, nextPageToken } = Front.listTags(token);
+        const { results, nextPageToken } = await Front.listTags(token);
         token = nextPageToken;
         this_tags.push(...results);
     }
