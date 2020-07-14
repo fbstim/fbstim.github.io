@@ -1,8 +1,9 @@
-var tags = null;
+let all_tags = null;
 
 getTags().then(tags => {
-    tags = tags;
+    all_tags = tags;
     console.log("Tags loaded");
+    console.dir(all_tags);
 }).then(function() {
     Front.contextUpdates.subscribe(context => {
         //Init the head with no contact
