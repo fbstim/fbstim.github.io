@@ -144,7 +144,7 @@ function addTag(context, mls) {
     });
 
     if (id) {
-        context.tag([id]);
+        Front.tag([id]);
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
         console.log("Creating new tag for MLS code " + mls);
