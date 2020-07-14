@@ -3,7 +3,6 @@ let all_tags = null;
 getTags().then(tags => {
     all_tags = tags;
     console.log("Tags loaded");
-    console.dir(all_tags);
 }).then(function() {
     Front.contextUpdates.subscribe(context => {
         //Init the head with no contact
@@ -105,8 +104,6 @@ function displayContactInfo(conversation, fbsusers) {
         addTag(conversation, 'FGO');
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
-        } else {
-            console.log("Not adding tag since there's more than one");
         }
     }
 }
@@ -147,7 +144,7 @@ function addTag(conversation, mls) {
     });
 
     if (id) {
-        // conversation.tag([id]);
+        conversation.tag([id]);
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
         console.log("Creating new tag for MLS code " + mls);
