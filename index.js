@@ -116,15 +116,14 @@ async function getTags() {
     const list = await Front.listTags();
     console.dir(list);
 
-    let nextPageToken = list.token;
+    let nextPageToken = list.nextPageToken;
     console.log(nextPageToken);
     const this_tags = list.results;
 
     while (nextPageToken) {
         console.log("Making pagination request for " + nextPageToken);
-        const { results, token } = await Front.listTags(nextPageToken);
+        const { results, nextPageToken } = await Front.listTags(nextPageToken);
 
-        nextPageToken = token;
         this_tags.push(...results);
     }
 
