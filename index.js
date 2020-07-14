@@ -116,16 +116,17 @@ async function getTags() {
     const list = await Front.listTags();
 
     let nextPageToken = list.token;
-    const tags = list.results;
+    const this_tags = list.results;
 
     while (nextPageToken) {
+        console.log("Making pagination request for " + nextPageToken);
         const { results, token } = await Front.listTags(nextPageToken);
 
         nextPageToken = token;
-        tags.push(...results);
+        this_tags.push(...results);
     }
-    console.dir(tags);
-    return tags;
+
+    return this_tags;
 }
 
 function addTag(conversation, mls) {
