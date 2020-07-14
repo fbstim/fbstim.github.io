@@ -102,13 +102,11 @@ function displayContactInfo(conversation, fbsusers) {
         });
 
         // get rid of duplicates in mls list then tag if there's only one MLS
-        console.log("MLSES");
-        console.dir(Array.from(new Set(mls)));
+        addTag(conversation, mls[0]);
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         } else {
             console.log("Not adding tag since there's more than one");
-            console.dir(mls);
         }
     }
 }
