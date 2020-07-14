@@ -1,6 +1,6 @@
-Front.contextUpdates.subscribe(context => {
-    let tags = null;
+let tags = null;
 
+Front.contextUpdates.subscribe(context => {
     getTags().then((tags) => {
         tags = tags;
         console.log("Tags loaded");
@@ -114,8 +114,10 @@ function displayContactInfo(conversation, fbsusers) {
 async function getTags() {
     console.log("Loading tags");
     const list = await Front.listTags();
+    console.dir(list);
 
     let nextPageToken = list.token;
+    console.log(nextPageToken);
     const this_tags = list.results;
 
     while (nextPageToken) {
