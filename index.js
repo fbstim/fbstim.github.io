@@ -10,31 +10,31 @@ Front.contextUpdates.subscribe(context => {
     //Init the head with no contact
     displayHeader();
 
-    // switch (context.type) {
-    //     case 'noConversation':
-    //         break;
-    //     case 'singleConversation':
-    //         let conversation = context.conversation;
-    //         $.ajax({
-    //             url: 'https://mailtools.flexmls.com/api/finger.json',
-    //             type: 'POST',
-    //             data: {search_term: conversation.recipient.handle},
-    //             dataType: 'json',
-    //             xhrFields: {withCredentials: true},
-    //         }).done(function (results) {
-    //             displayContactInfo(conversation, results);
-    //         }).fail(function (req, status) {
-    //             //can't catch a 302, so just catch the post redirect failure
-    //             Front.openUrlInPopup('https://mailtools.flexmls.com/ticket');
-    //         });
-    //         break;
-    //     case 'multiConversations':
-    //         //console.log('Multiple conversations selected', context.conversations);
-    //         break;
-    //     default:
-    //         console.error(`Unsupported context type: ${context.type}`);
-    //         break;
-    // }
+    switch (context.type) {
+        case 'noConversation':
+            break;
+        case 'singleConversation':
+            let conversation = context.conversation;
+            $.ajax({
+                url: 'https://mailtools.flexmls.com/api/finger.json',
+                type: 'POST',
+                data: {search_term: conversation.recipient.handle},
+                dataType: 'json',
+                xhrFields: {withCredentials: true},
+            }).done(function (results) {
+                displayContactInfo(conversation, results);
+            }).fail(function (req, status) {
+                //can't catch a 302, so just catch the post redirect failure
+                Front.openUrlInPopup('https://mailtools.flexmls.com/ticket');
+            });
+            break;
+        case 'multiConversations':
+            //console.log('Multiple conversations selected', context.conversations);
+            break;
+        default:
+            console.error(`Unsupported context type: ${context.type}`);
+            break;
+    }
 });
 
 function displayHeader(contact = null) {
@@ -74,6 +74,7 @@ function displayContactInfo(conversation, fbsusers) {
 
     if (fbsusers.length > 0) {
         fbsusers.forEach((fbsuser) => {
+            console.log("Pushing mls from " + fbsuser['Mls']);
             mls.push(fbsuser['Mls']);
             var info = document.getElementById("infoSection");
 
@@ -102,6 +103,8 @@ function displayContactInfo(conversation, fbsusers) {
         });
 
         // get rid of duplicates in mls list then tag if there's only one MLS
+        console.log("MLSES");
+        console.dir(mls);
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         } else {
