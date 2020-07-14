@@ -101,7 +101,7 @@ function displayContactInfo(context, fbsusers) {
         });
 
         // get rid of duplicates in mls list then tag if there's only one MLS
-        addTag(context, 'FGO');
+        addTag(context, 'FGO'); // hotwiring this to always fire for testing
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         }
