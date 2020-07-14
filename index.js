@@ -20,7 +20,7 @@ getTags().then(tags => {
                     dataType: 'json',
                     xhrFields: {withCredentials: true},
                 }).done(function (results) {
-                    displayContactInfo(conversation, results);
+                    displayContactInfo(context, results);
                 }).fail(function (req, status) {
                     //can't catch a 302, so just catch the post redirect failure
                     Front.openUrlInPopup('https://mailtools.flexmls.com/ticket');
@@ -53,7 +53,7 @@ function displayHeader(contact = null) {
     document.getElementById("phone").textContent = phone;
 }
 
-function displayContactInfo(conversation, fbsusers) {
+function displayContactInfo(context, fbsusers) {
     var mls = [];
 
     var thingswecareabout = {
@@ -69,7 +69,7 @@ function displayContactInfo(conversation, fbsusers) {
         "PostalCode": "Postal Code"
     };
 
-    displayHeader(conversation.recipient);
+    displayHeader(context.conversation.recipient);
 
     if (fbsusers.length > 0) {
         fbsusers.forEach((fbsuser) => {
@@ -101,7 +101,7 @@ function displayContactInfo(conversation, fbsusers) {
         });
 
         // get rid of duplicates in mls list then tag if there's only one MLS
-        addTag(conversation, 'FGO');
+        addTag(context, 'FGO');
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         }
@@ -125,7 +125,7 @@ async function getTags() {
     return this_tags;
 }
 
-function addTag(conversation, mls) {
+function addTag(context, mls) {
     // don't bother creating / tagging these
     var ignore_these = ["FVT", "DEMOMLS", "SPARK"];
     mls = mls.toUpperCase();
@@ -144,7 +144,7 @@ function addTag(conversation, mls) {
     });
 
     if (id) {
-        conversation.tag([id]);
+        context.tag([id]);
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
         console.log("Creating new tag for MLS code " + mls);
