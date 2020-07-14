@@ -114,10 +114,8 @@ function displayContactInfo(conversation, fbsusers) {
 async function getTags() {
     console.log("Loading tags");
     const list = await Front.listTags();
-    console.dir(list);
 
     let token = list.nextPageToken;
-    console.log(token);
     const this_tags = list.results;
 
     while (token) {
@@ -131,30 +129,31 @@ async function getTags() {
 }
 
 function addTag(conversation, mls) {
+    mls = mls.toUpperCase();
     console.log("Adding tag for " + mls);
     let id = false;
     $.each(tags, function (key, value) {
         if (value.name == mls) {
-            console.log("Found tag for " + mls);
             id = value.id;
+            console.log("Found tag for " + mls);
         }
     });
 
     if (id) {
-        conversation.tag([id]);
+        // conversation.tag([id]);
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
         console.log("Creating new tag for MLS code " + mls);
-        $.ajax({
-            url: 'https://api2.frontapp.com/tags',
-            type: 'POST',
-            data: { name: mls },
-            dataType: 'json',
-            xhrFields: { withCredentials: true },
-        }).done(function (results) {
-            console.dir(results);
-            console.log("Added tag, now attaching to conversation");
-            conversation.tag([results.id]);
-        });
+        // $.ajax({
+        //     url: 'https://api2.frontapp.com/tags',
+        //     type: 'POST',
+        //     data: { name: mls },
+        //     dataType: 'json',
+        //     xhrFields: { withCredentials: true },
+        // }).done(function (results) {
+        //     console.dir(results);
+        //     console.log("Added tag, now attaching to conversation");
+        //     conversation.tag([results.id]);
+        // });
     }
 }
