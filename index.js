@@ -103,7 +103,7 @@ function displayContactInfo(conversation, fbsusers) {
 
         // get rid of duplicates in mls list then tag if there's only one MLS
         console.log("MLSES");
-        console.dir(mls);
+        console.dir(Array.from(new Set(mls)));
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         } else {
