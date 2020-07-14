@@ -1,4 +1,6 @@
-let tags = await getTags();
+let tags = getTags();
+console.log("tags");
+console.dir(tags);
 // 
 // getTags().then((tags) => {
 //     tags = tags;
@@ -6,7 +8,6 @@ let tags = await getTags();
 // })
 
 Front.contextUpdates.subscribe(context => {
-    await getTags();
     //Init the head with no contact
     displayHeader();
 
@@ -111,16 +112,16 @@ function displayContactInfo(conversation, fbsusers) {
     }
 }
 
-async function getTags() {
+function getTags() {
     console.log("Loading tags");
-    const list = await Front.listTags();
+    const list = Front.listTags();
 
     let token = list.nextPageToken;
     const this_tags = list.results;
 
     while (token) {
         console.log("Making pagination request for " + token);
-        const { results, nextPageToken } = await Front.listTags(token);
+        const { results, nextPageToken } = Front.listTags(token);
         token = nextPageToken;
         this_tags.push(...results);
     }
