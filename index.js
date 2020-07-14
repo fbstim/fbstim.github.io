@@ -129,11 +129,11 @@ async function getTags() {
 }
 
 function addTag(conversation, mls) {
-    console.dir(tags);
+    console.dir(all_tags);
     mls = mls.toUpperCase();
     console.log("Adding tag for " + mls);
     let id = false;
-    $.each(tags, function (key, value) {
+    $.each(all_tags, function (key, value) {
         console.dir(value);
         if (value.name == mls) {
             id = value.id;
