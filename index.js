@@ -4,7 +4,7 @@ getTags().then(tags => {
     all_tags = tags;
     console.log("Tags loaded");
 }).then(function() {
-        (context => {
+        Front.contextUpdates.subscribe(context => {
         //Init the head with no contact
         displayHeader();
 
