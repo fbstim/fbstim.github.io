@@ -148,7 +148,7 @@ function addTag(context, mls) {
     });
 
     if (id) {
-        Front.tag([id]);
+        context.tag([id]);
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
         // per front support you can't create tag from plugin
