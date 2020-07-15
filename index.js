@@ -54,6 +54,7 @@ function displayHeader(contact = null) {
 }
 
 function displayContactInfo(context, fbsusers) {
+    console.log(context.conversation.recipient);
     var mls = [];
 
     var thingswecareabout = {
@@ -101,8 +102,12 @@ function displayContactInfo(context, fbsusers) {
         });
 
         // get rid of duplicates in mls list then tag only if there's just one MLS
-        if (Array.from(new Set(mls)).length == 1) {
+        let mls_array = Array.from(new Set(mls));
+        if (mls_array.length == 1) {
             addTag(context.conversation, mls[0]);
+        } else {
+
+            console.dir(mls_array);
         }
     }
 }
