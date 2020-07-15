@@ -102,7 +102,7 @@ function displayContactInfo(context, fbsusers) {
 
         // get rid of duplicates in mls list then tag only if there's just one MLS
         if (Array.from(new Set(mls)).length == 1) {
-            addTag(conversation, mls[0]);
+            addTag(context.conversation, mls[0]);
         }
     }
 }
