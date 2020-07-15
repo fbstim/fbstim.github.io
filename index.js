@@ -4,7 +4,7 @@ getTags().then(tags => {
     all_tags = tags;
     console.log("Tags loaded");
 }).then(function() {
-    Front.contextUpdates.subscribe(context => {
+        (context => {
         //Init the head with no contact
         displayHeader();
 
@@ -100,8 +100,7 @@ function displayContactInfo(context, fbsusers) {
             info.appendChild(document.createElement('hr'));
         });
 
-        // get rid of duplicates in mls list then tag if there's only one MLS
-        addTag(context, 'FGO'); // hotwiring this to always fire for testing
+        // get rid of duplicates in mls list then tag only if there's just one MLS
         if (Array.from(new Set(mls)).length == 1) {
             addTag(conversation, mls[0]);
         }
@@ -144,21 +143,10 @@ function addTag(context, mls) {
     });
 
     if (id) {
-        context.tag([id]);
-        // tried Front.tag([id]); here as well with same result
+        Front.tag([id]);
         console.log("Adding tag for id " + id + " and MLS code " + mls);
     } else {
-        console.log("Creating new tag for MLS code " + mls);
-        // $.ajax({
-        //     url: 'https://api2.frontapp.com/tags',
-        //     type: 'POST',
-        //     data: { name: mls },
-        //     dataType: 'json',
-        //     xhrFields: { withCredentials: true },
-        // }).done(function (results) {
-        //     console.dir(results);
-        //     console.log("Added tag, now attaching to conversation");
-        //     conversation.tag([results.id]);
-        // });
+        // per front support you can't create tag from plugin
+        console.log("Tag does not exist for " + mls);
     }
 }
