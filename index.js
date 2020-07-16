@@ -128,9 +128,15 @@ async function getTags() {
     return this_tags;
 }
 
-function addTag(context, mls) {
+function addTag(conversation, mls) {
     console.dir(context);
-    var existing_tags = context.conversation.tags;
+    var existing_tags = conversation.tags;
+    var flat_existing_tags = [];
+
+    $.each(existing_tags, function (key, value) {
+        flat_existing_tags.push(value.name)
+    });
+
     // don't bother creating / tagging these
     var ignore_these = ["FVT", "DEMOMLS", "SPARK"];
     mls = mls.toUpperCase();
@@ -138,8 +144,8 @@ function addTag(context, mls) {
     if (ignore_these.includes(mls)) {
         console.log("Ignoring " + mls);
         return;
-    } else if (existing_tags.includes(mls)) {
-        console.log("Conversation already tagged");
+    } else if (flat_existing_tags.includes(mls)) {
+        console.log("Conversation already tagged as " + mls);
         return;
     }
     
