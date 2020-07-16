@@ -54,7 +54,6 @@ function displayHeader(contact = null) {
 }
 
 function displayContactInfo(context, fbsusers) {
-    console.log(context.conversation.recipient);
     var mls = [];
 
     var thingswecareabout = {
@@ -130,12 +129,17 @@ async function getTags() {
 }
 
 function addTag(context, mls) {
+    console.dir(context);
+    var existing_tags = context.conversation.tags;
     // don't bother creating / tagging these
     var ignore_these = ["FVT", "DEMOMLS", "SPARK"];
     mls = mls.toUpperCase();
     
     if (ignore_these.includes(mls)) {
         console.log("Ignoring " + mls);
+        return;
+    } else if (existing_tags.includes(mls)) {
+        console.log("Conversation already tagged");
         return;
     }
     
