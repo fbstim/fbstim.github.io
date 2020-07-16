@@ -129,7 +129,7 @@ async function getTags() {
 }
 
 function addTag(conversation, mls) {
-    console.dir(context);
+    console.dir(conversation);
     var existing_tags = conversation.tags;
     var flat_existing_tags = [];
 
