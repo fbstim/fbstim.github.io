@@ -1,3 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search);
+const auth_secret = urlParams.get('auth_secret');
+
+console.log(auth_secret);
+
 let all_tags = null;
 
 getTags().then(tags => {
