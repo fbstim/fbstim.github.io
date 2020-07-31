@@ -1,7 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const auth_secret = urlParams.get('auth_secret');
 
-console.log(auth_secret);
 
 let all_tags = null;
 
@@ -21,7 +20,10 @@ getTags().then(tags => {
                 $.ajax({
                     url: 'https://mailtools.flexmls.com/api/finger.json',
                     type: 'POST',
-                    data: {search_term: conversation.recipient.handle},
+                    data: {
+                        search_term: conversation.recipient.handle,
+                        auth_secret: auth_secret
+                    },
                     dataType: 'json',
                     xhrFields: {withCredentials: true},
                 }).done(function (results) {
