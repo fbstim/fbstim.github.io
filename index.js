@@ -29,6 +29,9 @@ getTags().then(tags => {
                 }).done(function (results) {
                     displayContactInfo(context, results);
                 }).fail(function (req, status) {
+                    console.error("Error");
+                    console.dir(status);
+                    console.dir(req);
                     //can't catch a 302, so just catch the post redirect failure
                     Front.openUrlInPopup('https://mailtools.flexmls.com/ticket');
                 });
@@ -136,22 +139,16 @@ async function getTags() {
 }
 
 function addTag(conversation, mls) {
-    console.dir(conversation);
-    var existing_tags = conversation.tags;
-    var flat_existing_tags = [];
-
-    $.each(existing_tags, function (key, value) {
-        flat_existing_tags.push(value.name)
-    });
+    let existing_tags = conversation.tags.map(function(tag) { return tag.name; });
 
     // don't bother creating / tagging these
-    var ignore_these = ["FVT", "DEMOMLS", "SPARK"];
+    let ignore_these = ["FVT", "DEMOMLS", "SPARK"];
     mls = mls.toUpperCase();
     
     if (ignore_these.includes(mls)) {
         console.log("Ignoring " + mls);
         return;
-    } else if (flat_existing_tags.includes(mls)) {
+    } else if (existing_tags.includes(mls)) {
         console.log("Conversation already tagged as " + mls);
         return;
     }
