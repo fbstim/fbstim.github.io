@@ -18,7 +18,7 @@ getTags().then(tags => {
             case 'singleConversation':
                 let conversation = context.conversation;
                 $.ajax({
-                    url: 'https://mailtools.flexmls.com/api/finger.json',
+                    url: 'https://mailtools.flexmls.com/api/finger_front.json',
                     type: 'POST',
                     data: {
                         search_term: conversation.recipient.handle,
